@@ -9,6 +9,7 @@ const initialState: IIProps = {
   paginator: false,
   paginatedTransactions: [],
   page: 0,
+  selected: "All Employees",
 };
 
 export const transactionSlice = createSlice({
@@ -43,6 +44,10 @@ export const transactionSlice = createSlice({
     setPage: (state, action) => {
       state.page = action.payload;
     },
+
+    setSelected: (state, action) => {
+      state.selected = action.payload;
+    },
   },
 });
 
@@ -53,7 +58,8 @@ export const {
   setFilteredTransactions,
   setPagination,
   setPaginationTransactions,
-  setPage
+  setPage,
+  setSelected,
 } = transactionSlice.actions;
 
 export default transactionSlice.reducer;

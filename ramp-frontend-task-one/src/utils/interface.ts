@@ -28,8 +28,5 @@ export interface IIProps {
   paginatedTransactions: TransactionProps[];
   paginator: boolean;
   page: number;
-}
-
-export interface IITransaction {
-  transactionData: React.SetStateAction<TransactionProps[] | any>;
+  selected: string;
 }

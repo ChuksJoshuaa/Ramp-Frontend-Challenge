@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import {
   setPage,
   setPagination,
+  setSelected,
 } from "../redux/features/transaction/transactionSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
@@ -22,6 +23,7 @@ const Pagination = () => {
   const Paginate = () => {
     dispatch(setPagination(true));
     dispatch(setPage(newPage()));
+    dispatch(setSelected("All Employees"));
   };
 
   useEffect(() => {
