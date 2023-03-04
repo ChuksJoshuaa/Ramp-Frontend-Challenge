@@ -1,29 +1,49 @@
 import { useEffect } from "react";
-import { Pagination } from ".";
+import { Pagination, Loader } from ".";
 import {
-  setFilteredTransactions,
   setLoader,
+  setFilteredTransactions,
 } from "../redux/features/transaction/transactionSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { TransactionProps } from "../utils/interface";
-import Loader from "./Loader";
+import { Emp, TransactionProps } from "../utils/interface";
 
 const Transactions = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, page, filteredTransactions, paginatedTransactions } =
-    useAppSelector((state) => state.data);
+  const { isLoading, filteredTransactions } = useAppSelector(
+    (state) => state.data
+  );
 
-  
+  const handleChange = (e: React.ChangeEvent) => {
+    const checkValue = (e.target as HTMLInputElement).checked;
+    const getId = (e.target as HTMLInputElement).value;
 
+    const filteredValue = filteredTransactions.find(
+      (item) => item.id === getId
+    );
+    const filteredCheck = filteredTransactions.findIndex(
+      (item) => item.id === getId
+    );
 
+    if (filteredCheck !== -1) {
+      const newArray = [...filteredTransactions];
+      newArray[filteredCheck] = {
+        id: filteredValue?.id as string,
+        amount: Number(filteredValue?.amount),
+        date: filteredValue?.date as string,
+        employee: filteredValue?.employee as Emp,
+        merchant: filteredValue?.merchant as string,
+        approved: checkValue as boolean,
+      };
+
+      dispatch(setFilteredTransactions(newArray));
+    }
+  };
 
   useEffect(() => {
     setTimeout(() => {
       dispatch(setLoader(false));
     }, 900);
   });
-
-  useEffect(() => {}, [page]);
 
   if (isLoading) {
     return <Loader />;
@@ -42,9 +62,9 @@ const Transactions = () => {
             </div>
             <input
               type="checkbox"
-              value={item.date}
+              value={item.id}
               checked={item.approved}
-              onChange={(e) => console.log(e.target.checked)}
+              onChange={handleChange}
             />
           </div>
         </div>

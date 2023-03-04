@@ -4,18 +4,20 @@ export interface EmployeeProps {
   lastName: string;
 }
 
+export interface Emp {
+  id: string;
+  firstName: string;
+  lastName: string;
+  extras: number;
+}
+
 export interface TransactionProps {
   id: string;
   amount: number;
-  employee: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    extras: number;
-  };
+  employee: Emp;
   merchant: string;
   date: string;
-  approved: true;
+  approved: boolean;
 }
 
 export interface IIProps {
